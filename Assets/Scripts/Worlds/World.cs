@@ -146,9 +146,9 @@ namespace Terraria.Worlds
 
         private void SpawnText(string value)
         {
-            var text = new Text(value, this);
+            //var text = new Text(value, this);
 
-            AddGameObject(text);
+            //AddGameObject(text);
         }
 
         private void SpawnChunks()
