@@ -1,7 +1,6 @@
 ﻿using OpenTK.Mathematics;
 using Terraria.GameObjects;
 using Terraria.Graphics;
-using Terraria.Resources;
 using Terraria.Tiles;
 
 namespace Terraria.Worlds
@@ -79,9 +78,20 @@ namespace Terraria.Worlds
 
         public void RemoveAll()
         {
-            _gameObjects.Clear();
-            _worldSpaceRenderers.Clear();
-            _uiRenderers.Clear();
+            foreach (var renderer in _worldSpaceRenderers)
+            {
+                RemoveRenderer(renderer);
+            }
+
+            foreach (var renderer in _uiRenderers)
+            {
+                RemoveRenderer(renderer);
+            }
+
+            foreach (var gameObject in _gameObjects)
+            {
+                RemoveGameObject(gameObject);
+            }
         }
 
         public void Render()
@@ -161,29 +171,6 @@ namespace Terraria.Worlds
         {
             RemoveAll();
             TileCache.RemoveAll();
-        }
-    }
-
-    public class WorldGrid
-    {
-        private readonly Tile[,] _tiles;
-        private readonly World _world;
-
-        public WorldGrid(World world)
-        { 
-            _world = world;
-
-            _tiles = new Tile[World.Width, World.Height];
-        }
-
-        public void Set(Vector2i position, Tile tile)
-        {
-            _tiles[position.X, position.Y] = tile;
-        }
-
-        public Tile Get(Vector2i position)
-        {
-            return _tiles[position.X, position.Y];
         }
     }
 }

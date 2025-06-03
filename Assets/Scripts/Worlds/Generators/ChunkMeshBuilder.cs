@@ -5,7 +5,7 @@ using Terraria.Tiles;
 
 namespace Terraria.Worlds
 {
-    public class ChunkMeshBuilder
+    public partial class ChunkMeshBuilder
     {
         public Mesh Build(TileType[,] tiles)
         {
@@ -40,7 +40,7 @@ namespace Terraria.Worlds
         private TileMeshData GenerateTile(Vector2i position, TileType type, uint vertexCount)
         {
             var mesh = ResourceManager.Get<Mesh>(ResourceNames.SpriteMesh);
-            var uvs = Tessellator.GetTileUVs(TileCache.Get(type).UVStart, new Vector2(16f, 16f));
+            var uvs = Tessellator.GetTileUVs(TileCache.Get(type).UVStart, Tile.UVOffset);
 
             var vertices = new Vector3[6];
             var indecies = new uint[6];
@@ -58,23 +58,7 @@ namespace Terraria.Worlds
             indecies[4] = vertexCount + 4 - 1;
             indecies[5] = vertexCount + 4 - 4;
 
-            // 2, 3, 0,
-
             return new TileMeshData(vertices, uvs, indecies);
-        }
-
-        public struct TileMeshData
-        {
-            public readonly Vector3[] Vertices;
-            public readonly Vector2[] UVs;
-            public readonly uint[] Indecies;
-
-            public TileMeshData(Vector3[] vertices, Vector2[] uvs, uint[] indecies)
-            {
-                Vertices = vertices;
-                UVs = uvs;
-                Indecies = indecies;
-            }
         }
     }
 }

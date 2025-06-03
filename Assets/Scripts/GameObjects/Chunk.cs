@@ -37,8 +37,6 @@ namespace Terraria.Worlds
 
         public void Generate()
         {
-            Console.WriteLine(Transform.Position);
-
             var tiles = _builder.TerrainGenerator.Generate(Transform.Position);
             var mesh = _builder.MeshBuilder.Build(tiles);
 

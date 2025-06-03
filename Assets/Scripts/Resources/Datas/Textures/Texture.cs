@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System.Data.Common;
+using OpenTK.Graphics.OpenGL;
 using StbImageSharp;
 
 namespace Terraria.Resources
@@ -7,15 +8,19 @@ namespace Terraria.Resources
     {
         public readonly int ID;
 
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        public readonly int Width;
+        public readonly int Height;
 
         public Texture(string path)
         {
-            ID = Create(path);
+            var data = Create(path);
+
+            ID = data.ID;
+            Width = data.Width;
+            Height = data.Height;
         }
 
-        private int Create(string path)
+        private LoadedTextureData Create(string path)
         {
             var id = GL.GenTexture();
 
@@ -35,10 +40,7 @@ namespace Terraria.Resources
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
 
-            Width = image.Width;
-            Height = image.Height;
-
-            return id;
+            return new LoadedTextureData(id, image.Width, image.Height);
         }
     }
 }

@@ -106,10 +106,8 @@ namespace Terraria.GameObjects
             {
                 velocity -= Transform.Up;
             }
-
-            velocity *= delta * 5f;
-
-            Transform.Move(velocity);
+            
+            Transform.Move(velocity.Normalized() * delta * 5f);
         }
 
         private void ReloadProjectionMatrix()
