@@ -9,11 +9,16 @@ namespace Terraria.Graphics
         {
             var tilesTexture = ResourceManager.Get<Texture>(ResourceNames.TilesTexture);
 
-            uvStart.X /= tilesTexture.Width;
-            uvStart.Y /= tilesTexture.Height;
+            return GetUVs(uvStart, uvOffset, tilesTexture);
+        }
 
-            uvOffset.X /= tilesTexture.Width;
-            uvOffset.Y /= tilesTexture.Height;
+        public static Vector2[] GetUVs(Vector2 uvStart, Vector2 uvOffset, Texture texture)
+        {
+            uvStart.X /= texture.Width;
+            uvStart.Y /= texture.Height;
+
+            uvOffset.X /= texture.Width;
+            uvOffset.Y /= texture.Height;
 
             var uvs = new Vector2[]
             {

@@ -5,10 +5,42 @@ using Terraria.Worlds;
 
 namespace Terraria.Graphics
 {
-    partial class TextRenderer : UIRenderer
+    public class TextRenderer : UIRenderer
     {
-        public TextRenderer(Material material, GameObject gameObject) : base(material, gameObject)
+        private TextLetterRenderData[] _renderDatas = Array.Empty<TextLetterRenderData>(); 
+
+        public readonly Font Font;
+
+        public string Value { get; private set; }
+
+        public TextRenderer(Font font, Material material, GameObject gameObject) : base(material, gameObject)
         {
+            Font = font;
+        }
+
+        public void SetValue(string value)
+        {
+            Value = value;
+
+            UpdateRenderData();
+        }
+
+        private void UpdateRenderData()
+        {
+            _renderDatas = new TextLetterRenderData[Value.Length];
+
+            for (int i = 0; i < Value.Length; i++)
+            {
+                var vao = Font.Get(Value[i]);
+                var transform = new Transform();
+                var position = GameObject.Transform.Position + Font.SymbolSize * i;
+
+                transform.SetPosition(position);
+
+                var renderData = new TextLetterRenderData(vao, transform);
+
+                _renderDatas[i] = renderData;
+            }
         }
 
         public override void PreRender()
@@ -19,6 +51,18 @@ namespace Terraria.Graphics
         public override void Render()
         {
 
+        }
+    }
+
+    public struct TextLetterRenderData
+    {
+        public readonly int VAO;
+        public readonly Transform Transform;
+
+        public TextLetterRenderData(int vao, Transform transform)
+        {
+            VAO = vao;
+            Transform = transform;
         }
     }
 }
@@ -33,7 +77,10 @@ namespace Terraria.GameObjects
 
         public Text(string value, World world) : base(world)
         {
-            _renderer = new TextRenderer(null, this);
+            var material = ResourceManager.Get<Material>(ResourceNames.FontMaterial);
+            var font = ResourceManager.Get<Font>(ResourceNames.Font);
+
+            _renderer = new TextRenderer(font, material, this);
 
             SetValue(value);
         }
@@ -41,6 +88,8 @@ namespace Terraria.GameObjects
         public void SetValue(string value)
         {
             Value = value;
+
+            _renderer.SetValue(value);
         }
     }
 }

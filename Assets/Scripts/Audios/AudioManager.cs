@@ -1,12 +1,17 @@
-﻿using Terraria.Resources;
-
-namespace Terraria.Audios
+﻿namespace Terraria.Audios
 {
-    public class AudioManager
+    public static class AudioManager
     {
-        public void Play(Audio audio)
+        public static AudioSource Create()
         {
+            return new AudioSource();
+        }
 
+        public static void Delete(AudioSource source)
+        {
+            source = null;
+
+            GC.Collect();
         }
     }
 }

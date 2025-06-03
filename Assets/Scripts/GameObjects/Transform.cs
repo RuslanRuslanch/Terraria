@@ -72,7 +72,7 @@ namespace Terraria.GameObjects
             IsAllowUpdateMatrix = true; 
         }
 
-        public void DenyUpdateMatrix()
+        public void BlockUpdateMatrix()
         {
             IsAllowUpdateMatrix = false;
         }

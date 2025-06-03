@@ -36,14 +36,14 @@ namespace Terraria.Graphics
             GraphicsRenderer.SetWindow(this);
 
             _gameResourceLoader.Load();
-            _world.OnCreate();
+            _world.Load();
         }
 
         protected override void OnUnload()
         {
             base.OnUnload();
 
-            _world.OnDestroy();
+            _world.Unload();
             _gameResourceLoader.Unload();
         }
 
@@ -63,9 +63,11 @@ namespace Terraria.Graphics
         {
             base.OnUpdateFrame(args);
 
-            _tickSystem.Calculate((float)args.Time);
+            var delta = (float)args.Time;
 
-            _world.Update((float)args.Time);
+            _tickSystem.Calculate(delta);
+
+            _world.Update(delta);
             _tickSystem.Tick();
         }
 

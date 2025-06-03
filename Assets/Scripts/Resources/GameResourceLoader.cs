@@ -9,8 +9,8 @@ namespace Terraria.Resources
         public void Load()
         {
             var texture = ResourceManager.GetAndLoadTexture(ResourceNames.TilesTexture, @"Assets\Textures\TilesAtlas.png");
-            var mainShader = ResourceManager.GetAndLoadShader(ResourceNames.WorldSpaceVertexShader, @"Assets\Shaders\MainVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
-            var uiShader = ResourceManager.GetAndLoadShader(ResourceNames.UIVertexShader, @"Assets\Shaders\UIVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
+            var mainShader = ResourceManager.GetAndLoadShader(ResourceNames.WorldSpaceShader, @"Assets\Shaders\MainVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
+            var uiShader = ResourceManager.GetAndLoadShader(ResourceNames.UIShader, @"Assets\Shaders\UIVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
 
             ResourceManager.LoadMaterial(ResourceNames.TilesMaterial, new Material(texture, mainShader));
 

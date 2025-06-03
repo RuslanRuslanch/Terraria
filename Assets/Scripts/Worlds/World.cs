@@ -100,7 +100,7 @@ namespace Terraria.Worlds
             {
                 if (Camera.InBounds(renderer.Rect) == false)
                 {
-                    renderer.GameObject.Transform.DenyUpdateMatrix();
+                    renderer.GameObject.Transform.BlockUpdateMatrix();
 
                     continue;
                 }
@@ -134,7 +134,7 @@ namespace Terraria.Worlds
             }
         }
 
-        public void OnCreate()
+        public void Load()
         {
             SpawnText("Example text");
             SpawnChunks();
@@ -144,9 +144,11 @@ namespace Terraria.Worlds
             AddGameObject(camera);
         }
 
-        private void SpawnText(string text)
+        private void SpawnText(string value)
         {
+            var text = new Text(value, this);
 
+            AddGameObject(text);
         }
 
         private void SpawnChunks()
@@ -167,7 +169,7 @@ namespace Terraria.Worlds
             Console.WriteLine("Chunk count: " + chunkCount);
         }
 
-        public void OnDestroy()
+        public void Unload()
         {
             RemoveAll();
             TileCache.RemoveAll();
