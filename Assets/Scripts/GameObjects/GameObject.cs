@@ -10,13 +10,6 @@ namespace Terraria.GameObjects
         public GameObject(World world)
         {
             World = world;
-
-            OnSpawn();
-        }
-
-        ~GameObject()
-        {
-            OnDespawn();
         }
 
         public virtual void OnSpawn() { }

@@ -2,6 +2,7 @@
 using Terraria.GameObjects;
 using Terraria.Graphics;
 using Terraria.Resources;
+using Terraria.Tiles;
 
 namespace Terraria.Worlds
 {
@@ -49,11 +50,6 @@ namespace Terraria.Worlds
 
         public void AddGameObject(GameObject gameObject)
         {
-            if (gameObject == null)
-            {
-                return;
-            }
-
             if (_gameObjects.Contains(gameObject))
             {
                 return;
@@ -64,6 +60,8 @@ namespace Terraria.Worlds
                 Camera = camera;
             }
 
+            gameObject.OnSpawn();
+
             _gameObjects.Add(gameObject);
         }
 
@@ -73,6 +71,8 @@ namespace Terraria.Worlds
             {
                 Camera = null;
             }
+
+            gameObject.OnDespawn();
 
             _gameObjects.Remove(gameObject);
         }
@@ -127,7 +127,7 @@ namespace Terraria.Worlds
         public void OnCreate()
         {
             SpawnText("Example text");
-            SpawnTiles();
+            SpawnChunks();
 
             var camera = new Camera(this);
 
@@ -139,18 +139,28 @@ namespace Terraria.Worlds
 
         }
 
-        private void SpawnTiles()
+        private void SpawnChunks()
         {
-            var generator = new ChunkGenerator();
+            var terrainGenerator = new ChunkTerrainGenerator();
+            var meshBuilder = new ChunkMeshBuilder();
 
+            var chunkBuilder = new ChunkBuilder(terrainGenerator, meshBuilder);
+            var chunkCount = Width / Chunk.Width;
+
+            for (int x = 0; x < chunkCount; x++)
+            {
+                var chunk = chunkBuilder.Build(new Vector2i(x * Chunk.Width, 0), this);
+
+                AddGameObject(chunk);
+            }
             
-
-            Console.WriteLine("Tile count: " + (Width * Height));
+            Console.WriteLine("Chunk count: " + chunkCount);
         }
 
         public void OnDestroy()
         {
             RemoveAll();
+            TileCache.RemoveAll();
         }
     }
 

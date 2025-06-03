@@ -1,5 +1,6 @@
 ﻿using OpenTK.Mathematics;
 using Terraria.Graphics;
+using Terraria.Tiles;
 
 namespace Terraria.Resources
 {
@@ -7,13 +8,14 @@ namespace Terraria.Resources
     {
         public void Load()
         {
-            LoadSpriteMesh();
-            
             var texture = ResourceManager.GetAndLoadTexture(ResourceNames.TilesTexture, @"Assets\Textures\TilesAtlas.png");
             var mainShader = ResourceManager.GetAndLoadShader(ResourceNames.WorldSpaceVertexShader, @"Assets\Shaders\MainVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
             var uiShader = ResourceManager.GetAndLoadShader(ResourceNames.UIVertexShader, @"Assets\Shaders\UIVertexShader.vert", @"Assets\Shaders\MainFragmentShader.frag");
 
             ResourceManager.LoadMaterial(ResourceNames.TilesMaterial, new Material(texture, mainShader));
+
+            LoadSpriteMesh();
+            LoadTiles();
         }
 
         public void Unload()
@@ -37,11 +39,18 @@ namespace Terraria.Resources
                 2, 3, 0,
             };
 
-            var uvs = Tessellator.GetUVs(Vector2.Zero, Vector2.One);
+            var uvs = Tessellator.GetTileUVs(Vector2.Zero, Vector2.One);
 
             var mesh = new Mesh(vertices, uvs, indecies);
 
             ResourceManager.LoadMesh(ResourceNames.SpriteMesh, mesh);
+        }
+
+        private void LoadTiles()
+        {
+            TileCache.Add(new GrassTile());
+            TileCache.Add(new StoneTile());
+            TileCache.Add(new DirtTile());
         }
     }
 }

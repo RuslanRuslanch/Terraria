@@ -5,11 +5,11 @@ namespace Terraria.Graphics
 {
     public class Mesh : IResource
     {
-        public Vector3[] Vertices { get; private set; }
-        public Vector2[] UVs { get; private set; }
-        public uint[] Indecies { get; private set; }
+        public Vector3[] Vertices { get; private set; } = Array.Empty<Vector3>();
+        public Vector2[] UVs { get; private set; } = Array.Empty<Vector2>();
+        public uint[] Indecies { get; private set; } = Array.Empty<uint>();
 
-        public int IndexCount { get; private set; }
+        public int IndexCount { get; private set; } = 0;
 
         public Mesh()
         {
@@ -18,10 +18,9 @@ namespace Terraria.Graphics
 
         public Mesh(Vector3[] vertices, Vector2[] uvs, uint[] indecies)
         {
-            Vertices = vertices;
-            UVs = uvs;
-            Indecies = indecies;
-            IndexCount = indecies.Length;
+            SetVertices(vertices);
+            SetUVs(uvs);
+            SetIndecies(indecies);
         }
 
         public void SetUVs(Vector2[] uvs)

@@ -1,7 +1,9 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System.Net.Http.Headers;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using Terraria.Inputs;
 using Terraria.Resources;
 using Terraria.Worlds;
@@ -53,7 +55,7 @@ namespace Terraria.Graphics
             GL.ClearColor(Color4.CornflowerBlue);
 
             _world.Render();
-            
+
             SwapBuffers();
         }
 

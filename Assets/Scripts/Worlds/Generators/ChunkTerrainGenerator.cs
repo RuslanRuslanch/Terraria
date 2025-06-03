@@ -6,11 +6,11 @@ using Terraria.Tiles;
 
 namespace Terraria.Worlds
 {
-    public class ChunkGenerator
+    public class ChunkTerrainGenerator
     {
         private readonly FastNoiseLite _noise = new FastNoiseLite(228);
 
-        public ChunkGenerator()
+        public ChunkTerrainGenerator()
         {
             _noise.SetFrequency(0.1f);
 
@@ -30,11 +30,15 @@ namespace Terraria.Worlds
                 {
                     if (height - y > 1)
                     {
-                        results[x, y] = TileType.Grass;
+                        results[x, y] = TileType.Dirt;
                     }
-                    else
+                    if (height - y > 5)
                     {
                         results[x, y] = TileType.Stone;
+                    }
+                    if (height - y <= 1)
+                    {
+                        results[x, y] = TileType.Grass;
                     }
                 }
             }
